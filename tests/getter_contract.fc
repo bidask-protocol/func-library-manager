@@ -1,0 +1,14 @@
+forall X -> X null() asm "PUSHNULL";
+
+() a(int op, int query_id, cell new_code, slice in_msg_body, slice sender_address) impure method_id(0x1337) {
+    return ();
+}
+
+() recv_internal(cell in_msg_cell, slice in_msg) impure {
+    a(0, 0, null(), null(), null());
+    return ();
+}
+
+int test_method123456789() method_id {
+    return 13371337;
+}

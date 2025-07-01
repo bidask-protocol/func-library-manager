@@ -1,0 +1,35 @@
+const op::add_lib = "op::add_lib"c;
+const op::delete_lib = "op::delete_lib"c;
+
+cell get_data() asm "c4 PUSH";
+(slice, cell) load_ref(slice s) asm( -> 1 0) "LDREF";
+slice begin_parse(cell c) asm "CTOS";
+(slice, slice) load_msg_addr(slice s) asm( -> 1 0) "LDMSGADDR";
+int equal_slices(slice a, slice b) asm "SDEQ";
+() set_lib_code(cell code, int mode) impure asm "SETLIBCODE";
+() change_lib(int hash, int mode) impure asm "CHANGELIB";
+int slice_empty?(slice s) asm "SEMPTY";
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    if (in_msg_body.slice_empty?()) {
+        return ();
+    }
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    if (flags & 1) {
+        return ();
+    }
+    slice sender_address = cs~load_msg_addr();
+    throw_unless(100, equal_slices(sender_address, get_data().begin_parse()));
+    int op = in_msg_body~load_uint(32);
+
+    if (op == op::add_lib) {
+        set_lib_code(in_msg_body~load_ref(), 2);
+    }
+
+    if (op == op::delete_lib) {
+        set_lib_code(in_msg_body~load_ref(), 0);
+    }
+
+    return ();
+}
