@@ -25,7 +25,7 @@ export class LibraryManager implements Contract {
         return new LibraryManager(contractAddress(workchain, init), init);
     }
 
-    async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
+    async sendDeploy(provider: ContractProvider, via: Sender, value: bigint = toNano("0.1")) {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
@@ -33,7 +33,7 @@ export class LibraryManager implements Contract {
         });
     }
 
-    async sendAddLibrary(provider: ContractProvider, via: Sender, code: Cell, value: bigint = toNano("0.1")) {
+    async sendAddLibrary(provider: ContractProvider, via: Sender, code: Cell, value: bigint = toNano("1")) {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,

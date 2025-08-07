@@ -13,7 +13,7 @@ export class Getter implements Contract {
         return new Getter(contractAddress(workchain, init), init);
     }
 
-    async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
+    async sendDeploy(provider: ContractProvider, via: Sender, value: bigint = toNano("0.1")) {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY
@@ -21,8 +21,13 @@ export class Getter implements Contract {
     }
 
     async getTest(provider: ContractProvider) {
-        const result = await provider.get('test_method123456789', []);
-        let num = result.stack.readNumber();
-        return num;
+        try {
+            const result = await provider.get('test_method123456789', []);
+            let num = result.stack.readNumber();
+            return num;
+        }
+        catch {
+            return -1;
+        }
     }
 }
