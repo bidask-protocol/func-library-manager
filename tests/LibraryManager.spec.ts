@@ -14,8 +14,8 @@ describe('LibraryManager', () => {
         code = await compile('LibraryManager');
         const _libs = Dictionary.empty(Dictionary.Keys.BigUint(256), Dictionary.Values.Cell());
         getterCodeRaw = await compile('Getter');
-        let lib_prep = beginCell().storeUint(2, 8).storeBuffer(getterCodeRaw.hash()).endCell();
-        getterCode = new Cell({exotic: true, bits: lib_prep.bits, refs: lib_prep.refs});
+        let libPrep = beginCell().storeUint(2, 8).storeBuffer(getterCodeRaw.hash()).endCell();
+        getterCode = new Cell({exotic: true, bits: libPrep.bits, refs: libPrep.refs});
     });
 
     let blockchain: Blockchain;

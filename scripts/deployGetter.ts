@@ -3,8 +3,8 @@ import { compile, NetworkProvider } from '@ton/blueprint';
 import { Getter } from '../wrappers/Getter';
 
 export async function run(provider: NetworkProvider) {
-    let getter_code_raw = await compile("Getter");
-    let lib_prep = beginCell().storeUint(2, 8).storeBuffer(getter_code_raw.hash()).endCell();
+    let getterCodeRaw = await compile("Getter");
+    let lib_prep = beginCell().storeUint(2, 8).storeBuffer(getterCodeRaw.hash()).endCell();
     const getter_code = new Cell({exotic: true, bits: lib_prep.bits, refs: lib_prep.refs});
     const getter = provider.open(Getter.createFromConfig(getter_code));
 

@@ -2,8 +2,8 @@ import { Address, beginCell, Cell, Contract, contractAddress, ContractProvider, 
 import { crc32 } from 'zlib';
 
 export const Opcodes = {
-    add_lib: crc32("op::add_lib"),
-    delete_lib: crc32("op::delete_lib"),
+    addLib: crc32("op::add_lib"),
+    deleteLib: crc32("op::delete_lib"),
 }
 
 export type LibraryManagerConfig = {owner: Address};
@@ -37,7 +37,7 @@ export class LibraryManager implements Contract {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(Opcodes.add_lib, 32).storeRef(code).endCell(),
+            body: beginCell().storeUint(Opcodes.addLib, 32).storeRef(code).endCell(),
         });
     }
 
@@ -45,7 +45,7 @@ export class LibraryManager implements Contract {
         await provider.internal(via, {
             value,
             sendMode: SendMode.PAY_GAS_SEPARATELY,
-            body: beginCell().storeUint(Opcodes.delete_lib, 32).storeRef(code).endCell(),
+            body: beginCell().storeUint(Opcodes.deleteLib, 32).storeRef(code).endCell(),
         });
     }
 }
