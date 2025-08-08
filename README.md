@@ -1,5 +1,10 @@
 # func-library-manager
 
+A smart contract written in Func that allows publishing and deleting library cells for convenient storage fees management.
+
+Accepts two types of messages for adding and removing libraries.
+
+
 ## Project structure
 
 -   `contracts` - source code of all the smart contracts of the project and their dependencies.
@@ -21,6 +26,8 @@
 
 `npx blueprint run` or `yarn blueprint run`
 
-### Add a new contract
+Scripts:
+    Add library: /scripts/addLib.ts
+    Remove library: /scripts/deleteLib.ts
 
-`npx blueprint create ContractName` or `yarn blueprint create ContractName`
+You need to change *code* variable in scripts to publish library cell with your contract's code.
